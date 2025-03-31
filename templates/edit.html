@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block body%}
+
+
+<div class="container">
+    <h2>Edit Listing</h2>
+    <form action='/edit/{{job.sno}}' method='POST'>
+        <div class="mb-3">
+            <label for="title" class="form-label">Job Title</label>
+            <input type="text" class="form-control" name='title' id="title" value="{{job.job}}" >
+        </div>
+        <div class="mb-3">
+            <label for="desc" class="form-label">Description</label>
+            <input type="text" class="form-control" name='desc' value="{{job.desc}}" id="desc">
+        </div>
+        <div class="mb-3">
+            <label for="pay" class="form-label">Payment</label>
+            <input type="number" class="form-control" name='pay' value="{{job.pay}}"  id="pay">
+        </div>
+        <button type="submit" class="btn btn-dark btn-outline-light btn-primary">Edit</button>
+    </form>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+
+{% endblock body %}

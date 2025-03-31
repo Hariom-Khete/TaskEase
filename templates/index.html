@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock title %}
+
+{% block body%}
+
+
+
+<div class="container">
+    <h2>Your Listings</h2>
+    <form action='/' method='POST'>
+        <div class="mb-3">
+            <label for="title" class="form-label">Job Title</label>
+            <input type="text" class="form-control" name='title' id="title" >
+        </div>
+        <div class="mb-3">
+            <label for="desc" class="form-label">Description</label>
+            <input type="text" class="form-control" name='desc' id="desc">
+        </div>
+        <div class="mb-3">
+            <label for="pay" class="form-label">Payment</label>
+            <input type="number" class="form-control" name='pay' id="pay">
+        </div>
+        <button type="submit" class="btn btn-dark btn-outline-light btn-primary">Submit</button>
+    </form>
+</div>
+<div class="container my-3">
+    <h3>Your Jobs</h3>
+    {% if alljobs|length == 0 %}
+    <div class="alert alert-dark" role="alert">
+        Add Your Errands now !!!
+    </div>
+
+    {% else %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Job Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Payment</th>
+                <th scope="col">Date Uploaded</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jobs in alljobs %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{jobs.job}}</td>
+                <td>{{jobs.desc}}</td>
+                <td>{{jobs.pay}}</td>
+                <td>{{jobs.date_created}}</td>
+                <td><a href='/remove/{{jobs.sno}}' type="button"
+                        class="btn btn-outline-dark  btn-sm mx-1">Remove</button>
+                        <a href='/edit/{{jobs.sno}}' type="button"
+                            class="btn btn-outline-dark  btn-sm mx-1">Edit</button></td>
+            </tr>
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+
+    {% endif %}
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+{% endblock body %}
