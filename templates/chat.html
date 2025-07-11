@@ -1,0 +1,539 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<head>
+
+    <title>{% block title %}Chat{% endblock title %}</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trackr - Real-Time User Tracking with Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/lucide-icons@0.1.4/dist/lucide.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.1.4/dist/lucide.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #181818;
+            color: #f1f1f1;
+        }
+
+        .glow-effect {
+            box-shadow: 0 0 15px rgba(142, 68, 173, 0.5);
+        }
+
+        .glow-effect-blue {
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
+        }
+
+        .search-box:focus {
+            box-shadow: 0 0 0 2px #8E44AD;
+        }
+
+        .tracking-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(142, 68, 173, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(142, 68, 173, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(142, 68, 173, 0);
+            }
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .status-available {
+            background-color: rgba(46, 204, 113, 0.2);
+            border-left: 3px solid #2ecc71;
+        }
+
+        .status-busy {
+            background-color: rgba(231, 76, 60, 0.2);
+            border-left: 3px solid #e74c3c;
+        }
+
+        /* Chat styles */
+        .chat-container {
+            transition: all 0.3s ease;
+            transform: translateX(100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .chat-container.open {
+            transform: translateX(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .chat-messages {
+            scrollbar-width: thin;
+            scrollbar-color: #4a5568 #2d3748;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #2d3748;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background-color: #4a5568;
+            border-radius: 6px;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .received {
+            background-color: #2d3748;
+            border-radius: 0 12px 12px 12px;
+        }
+
+        .sent {
+            background-color: #4c51bf;
+            border-radius: 12px 0 12px 12px;
+        }
+
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #a0aec0;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+            }
+
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Floating chat button */
+        .chat-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 50;
+            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.5);
+        }
+
+        .unread-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background-color: #e53e3e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        /* Main chat interface */
+        .main-chat {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            background-color: #1a202c;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background-color: #2d3748;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #4a5568;
+        }
+
+        .chat-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            background-color: #1a202c;
+        }
+
+        .chat-input-container {
+            padding: 12px;
+            background-color: #2d3748;
+            border-top: 1px solid #4a5568;
+        }
+
+        .chat-input {
+            width: 100%;
+            background-color: #4a5568;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 16px;
+            color: white;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            outline: 2px solid #667eea;
+        }
+
+        .send-button {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        .message {
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message.sent {
+            align-items: flex-end;
+        }
+
+        .message.received {
+            align-items: flex-start;
+        }
+
+        .message-bubble {
+            padding: 10px 16px;
+            margin: 4px 0;
+            max-width: 80%;
+            border-radius: 18px;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: #a0aec0;
+            margin-top: 4px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+
+        .typing-indicator {
+            display: flex;
+            padding: 8px 16px;
+            background-color: #2d3748;
+            border-radius: 18px;
+            width: fit-content;
+            margin-bottom: 12px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-6">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
+            <div class="flex items-center">
+                <div
+                    class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </div>
+                <h1
+                    class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
+                    Chat With , {{receiver.username}}</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400 hover:text-blue-400 transition"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                    <span
+                        class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-purple-500 ring-2 ring-gray-800"></span>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-gray-700 overflow-hidden">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile"
+                        class="w-full h-full object-cover">
+                </div>
+            </div>
+        </header>
+
+
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-1 bg-gray-900 rounded-xl p-6 shadow-lg">
+                <h2 class="text-xl font-semibold mb-6 text-gray-200">Job Details</h2>
+
+                <!---------------------------------------- Job Card ------------------------------------------->
+
+                <div class="mb-6">
+                    <h3 class="text-sm font-medium text-gray-400 mb-3 uppercase tracking-wider">Job Card</h3>
+                    <div class="space-y-2">
+                        <div class="p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition">
+
+                            <div
+                                class="bg-gray-800 rounded-xl p-6 border border-gray-700 transition duration-300 card-hover">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div>
+                                        <div class="flex items-center space-x-2 mb-1">
+                                            <i data-lucide="file-text" class="w-5 h-5 text-blue-400"></i>
+                                            <h3 class="text-xl font-semibold text-white">{{ job.job }}</h3>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <p class="text-gray-400 text-sm">{{ job.category }}</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="flex items-start space-x-2 mb-6">
+                                    <i data-lucide="text" class="w-5 h-5 text-gray-400 mt-1"></i>
+                                    <p class="text-gray-300">{{ job.desc }}</p>
+                                </div>
+
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="location-glow pulse-hover cursor-pointer">
+                                            <i data-lucide="map-pin" class="w-5 h-5 text-blue-400"></i>
+                                        </div>
+                                        <span class="text-gray-400 text-sm">{{ job.location }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tracking Controls -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-400 mb-3 uppercase tracking-wider">Tracking Options</h3>
+                    <div class="space-y-3">
+                        <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer">
+                            <button id="startTracking"
+                                class="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center glow-effect hover:opacity-90 transition tracking-pulse">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                </svg>
+                                Start Live Tracking
+                            </button>
+                        </a>
+
+                        <button
+                            class="w-full bg-gray-800 text-gray-200 py-3 px-4 rounded-lg font-medium flex items-center justify-center border border-gray-700 hover:border-blue-400 hover:text-blue-400 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                            </svg>
+                            Share Location
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Interface (replacing the map) -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Chat Header (User Info) -->
+                <div class="chat-header bg-gray-800 p-4 rounded-t-xl flex items-center justify-between">
+                    <!-- Left side: User Info -->
+                    <div class="flex items-center space-x-3">
+                        <!-- User Avatar -->
+                        <div class="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center">
+                            {{ receiver.username[0].upper() }} <!-- Show first letter of the username -->
+                        </div>
+                        <!-- User Details -->
+                        <div>
+                            <p class="text-white font-semibold">{{ receiver.username }}</p>
+                            <p class="text-gray-400 text-sm">{{ receiver.email }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!--------------------------------- Main Chat Container ----------------------------------->
+                <div class="main-chat bg-gray-900 rounded-xl shadow-lg flex flex-col h-[500px]">
+
+
+                    <!-- Scrollable Chat Content -->
+                    <div id="mainChatMessages" class="chat-content flex-1 overflow-y-auto p-4 space-y-4">
+                        {% for message in messages %}
+                        <div
+                            class="flex items-start {% if message.sender_id == current_user.id %}justify-end{% endif %}">
+                            {% if message.sender_id != current_user.id %}
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg"
+                                class="w-8 h-8 rounded-full mr-2 mt-1">
+                            {% endif %}
+                            <div
+                                class="message-bubble {% if message.sender_id == current_user.id %}sent{% else %}received{% endif %} p-3 text-white bg-gray-700 rounded-lg">
+                                {{ message.content }}
+                            </div>
+                            {% if message.sender_id == current_user.id %}
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg"
+                                class="w-8 h-8 rounded-full ml-2 mt-1">
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+
+
+                    </div>
+
+                    <!-- Chat Input (fixed at bottom) -->
+                    <div class="bg-gray-800 p-4 border-t border-gray-700">
+                        <div class="flex items-center space-x-2">
+                            <button class="text-gray-400 hover:text-blue-400 transition">
+                                <!-- Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </button>
+                            <input id="chatInput" type="text" placeholder="Type a message..."
+                                class="flex-1 bg-gray-700 text-gray-200 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <button id="sendMessage"
+                                class="bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-full p-2 hover:opacity-90 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+        </main>
+
+
+
+        <script>
+            lucide.createIcons();
+            document.addEventListener('DOMContentLoaded', () => {
+                const chatInput = document.getElementById('chatInput');
+                const chatMessages = document.getElementById('mainChatMessages');
+                const sendButton = document.getElementById('sendMessage');
+
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                chatInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        sendMessageHandler();
+                    }
+                });
+
+                sendButton.addEventListener('click', sendMessageHandler);
+
+                function sendMessageHandler() {
+                    const message = chatInput.value.trim();
+                    if (!message) return;
+
+
+                    const receiverId = {{ receiver.id | tojson}};  // receiver ID injected from Flask
+
+            fetch(`/chat/${receiverId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        addMessage(data.message.content, 'sent');
+                        chatInput.value = '';
+                    } else {
+                        alert(data.error);
+                    }
+                })
+                .catch(err => {
+                    console.error("Error sending message:", err);
+                });
+                    }
+
+            function addMessage(text, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `flex items-start ${type === 'sent' ? 'justify-end' : ''}`;
+
+                if (type === 'received') {
+                    messageDiv.innerHTML = `
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-8 h-8 rounded-full mr-2 mt-1">
+                        <div class="message-bubble ${type} p-3 text-white bg-gray-700 rounded-lg">${text}</div>
+                    `;
+                } else {
+                    messageDiv.innerHTML = `
+                        <div class="message-bubble ${type} p-3 text-white bg-blue-600 rounded-lg">${text}</div>
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-8 h-8 rounded-full ml-2 mt-1">
+                    `;
+                }
+
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+        </script>
+
+
+
+
+</body>
+
+{% endblock body %}

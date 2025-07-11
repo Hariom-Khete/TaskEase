@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>Login - TaskEase</title>
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #181818;
+            color: #f5f5f5;
+        }
+
+        .glow-effect {
+            box-shadow: 0 0 15px rgba(142, 68, 173, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .glow-effect:hover {
+            box-shadow: 0 0 25px rgba(142, 68, 173, 0.5);
+        }
+
+        .glow-effect-blue {
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .glow-effect-blue:hover {
+            box-shadow: 0 0 25px rgba(52, 152, 219, 0.5);
+        }
+
+        .input-glow:focus {
+            box-shadow: 0 0 10px rgba(142, 68, 173, 0.4);
+            border-color: #8E44AD;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #777;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #333;
+        }
+
+        .divider::before {
+            margin-right: 1rem;
+        }
+
+        .divider::after {
+            margin-left: 1rem;
+        }
+
+        .freelance-illustration {
+            background: linear-gradient(135deg, #8E44AD 0%, #3498DB 100%);
+            border-radius: 20px;
+        }
+
+        .illustration-img {
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .illustration-img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="container mx-auto flex flex-col lg:flex-row items-center justify-center gap-12">
+        <!-- Illustration Section -->
+        <div class="w-full lg:w-1/2 flex justify-center">
+            <div
+                class="freelance-illustration p-8 max-w-md w-full h-96 lg:h-auto flex flex-col justify-center items-center text-white glow-effect">
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-bold mb-2">Welcome to TaskEase</h2>
+                    <p class="text-white/80">Connect with clients and grow your freelance business</p>
+                </div>
+                <div class="relative w-full h-48 flex items-center justify-center">
+                    <div class="absolute w-32 h-32 rounded-full bg-purple-600 opacity-20 blur-xl"></div>
+                    <div class="absolute w-32 h-32 rounded-full bg-blue-600 opacity-20 blur-xl right-0 bottom-0"></div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/2463/2463510.png" alt="Freelancer Illustration"
+                        class="relative z-10 w-48 illustration-img">
+                </div>
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-white/70">Don't have an account?</p>
+                    <a href="/signup" class="text-white font-medium hover:underline">Sign up now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Section -->
+        <div class="w-full lg:w-1/2 max-w-md">
+            <div class="bg-[#222] p-8 rounded-xl shadow-lg glow-effect">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-white mb-2">Sign In</h1>
+                    <p class="text-gray-400">Access your freelance dashboard</p>
+                </div>
+
+                <form method="POST" action="/login" id="signinForm" class="space-y-6">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+                        <input type="email" id="email" name="email" required
+                        placeholder="demo@taskease.com"
+                        value="demo@taskease.com"
+                        class="w-full px-4 py-3 rounded-lg bg-[#333] border border-[#444] text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 input-glow transition-all">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+                            <a class="text-sm text-blue-400 hover:underline">Demo Account only</a>
+                        </div>
+                        <input type="password" id="password" name="password" required
+                            placeholder="1234"
+                            value="1234"
+                            class="w-full px-4 py-3 rounded-lg bg-[#333] border border-[#444] text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-600 input-glow transition-all">
+                    </div>
+
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox"
+                            class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-600 rounded bg-[#333]">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-300">Remember me</label>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-medium rounded-lg transition-all duration-300 glow-effect-blue">
+                        Sign In
+                    </button>
+
+                    <div class="divider text-sm text-pink-500"><a>Demo Mode Active</a>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button type="button"
+                            class="flex items-center justify-center py-2 px-4 bg-[#333] hover:bg-[#3a3a3a] rounded-lg transition-all">
+                            <i class="fab fa-google text-red-500 mr-2"></i>
+                            <span class="text-sm">Google</span>
+                        </button>
+                        <button type="button"
+                            class="flex items-center justify-center py-2 px-4 bg-[#333] hover:bg-[#3a3a3a] rounded-lg transition-all">
+                            <i class="fab fa-github text-gray-300 mr-2"></i>
+                            <span class="text-sm">GitHub</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-8 text-center text-sm text-gray-400">
+                    <p>By signing in, you agree to our <a href="#" class="text-blue-400 hover:underline">Terms</a> and
+                        <a href="#" class="text-blue-400 hover:underline">Privacy Policy</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signinForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Simple validation
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // Here you would typically send the data to your backend
+            console.log('Signing in with:', { email, password });
+
+            // Simulate successful login
+            const submitBtn = document.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Signing in...';
+            submitBtn.disabled = true;
+
+
+
+
+            setTimeout(() => {
+                submitBtn.innerHTML = 'Sign In';
+                submitBtn.disabled = false;
+                alert('Login successful! ');
+            }, 1500);
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+            })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url; // follow redirect (like /dashboard)
+                    } else {
+                        return response.text();
+                    }
+                })
+                .then(data => {
+                    // if not redirected, show error or message
+                    submitBtn.innerHTML = 'Sign In';
+                    submitBtn.disabled = false;
+                    console.log(data);
+                })
+                .catch(err => {
+                    submitBtn.innerHTML = 'Sign In';
+                    submitBtn.disabled = false;
+                    alert('Login failed. Please try again.');
+                    console.error(err);
+                });
+
+
+        })
+
+        // Add glow effect to social buttons on hover
+        const socialButtons = document.querySelectorAll('.grid button');
+        socialButtons.forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                if (button.querySelector('.fa-google')) {
+                    button.classList.add('glow-effect');
+                    button.style.boxShadow = '0 0 15px rgba(219, 68, 55, 0.3)';
+                } else {
+                    button.classList.add('glow-effect');
+                    button.style.boxShadow = '0 0 15px rgba(255, 255, 255, 0.1)';
+                }
+            });
+
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('glow-effect');
+                button.style.boxShadow = '';
+            });
+        });
+
+        // Add animation to illustration on hover
+        const illustration = document.querySelector('.illustration-img');
+        illustration.addEventListener('mouseenter', () => {
+            illustration.style.transform = 'scale(1.05)';
+        });
+        illustration.addEventListener('mouseleave', () => {
+            illustration.style.transform = 'scale(1)';
+        });
+    </script>
+</body>
+
+</html>

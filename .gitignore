@@ -1,0 +1,20 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+
+# SQLite DB
+*.db
+*.sqlite3
+
+# Environment
+.env
+
+# macOS & Windows junk
+.DS_Store
+Thumbs.db
+
+# VS Code settings (optional)
+.vscode/
+
+# Python virtual environment (optional)
+venv/

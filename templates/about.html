@@ -2,7 +2,7 @@
 {% block body %}
 
 
-<h1> About our Project   </h1>
+<title>{% block title %}About{% endblock title %}</title>
     <iframe src="{{ url_for('static', filename='TaskEase.pdf') }}" width="100%" height="750px"></iframe>
     
 {% endblock body %}

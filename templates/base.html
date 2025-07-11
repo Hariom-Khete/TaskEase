@@ -1,61 +1,263 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title  %}
-        
-    {% endblock title %} - TaskEase</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock title %} - TaskEase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6A0DAD',
+                        secondary: '#4A90E2',
+                        accent: '#FFA500',
+                        dark: '#1E1E1E',
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #6A0DAD 0%, #4A90E2 100%);
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-feature-card:hover {
+            background: linear-gradient(135deg, rgba(106, 13, 173, 0.1) 0%, rgba(74, 144, 226, 0.1) 100%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #FFA500;
+            transition: width .3s;
+        }
+
+        .smooth-transition {
+            transition: all 0.3s ease;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+    </style>
+
+
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">TaskEase</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/About">About</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+
+<body class="font-inter bg-dark text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-dark text-white py-4 px-6 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-tasks text-accent text-2xl"></i>
+                <a href="/dashboard" class="font-poppins font-bold text-xl">Task<span
+                        class="text-accent">Ease</span></a>
+            </div>
+
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="/about" class="nav-link">About</a>
+                <a href="/dashboard" class="nav-link">Home</a>
+                <a href="/postjob" class="nav-link">Post Jobs</a>
+                <a href="/contacts" class="nav-link">Contacts</a>
+                <a href="#features" class="nav-link">AI Features</a>
+                <a href="#wallet" class="nav-link">Smart Wallet</a>
+                <div class="relative group">
+                    <button class="flex items-center space-x-1 nav-link">
+                        <span>Support</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div
+                        class="absolute hidden group-hover:block bg-white text-dark rounded-md shadow-lg mt-2 w-48 py-1 z-50">
+                        <a href="#faq" class="block px-4 py-2 hover:bg-gray-100">FAQ</a>
+                        <a href="#privacy" class="block px-4 py-2 hover:bg-gray-100">Privacy Policy</a>
+                        <a href="#guidelines" class="block px-4 py-2 hover:bg-gray-100">Community Guidelines</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="flex items-center space-x-4">
+                {% if session['user_id'] %}
+                <a href="/logout"
+                class="hidden md:block bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium px-4 py-2 rounded-full smooth-transition flex items-center space-x-2">
+                <i class="fas fa-user-circle text-lg"></i>
+                <a href = "/p_id">{{session['username']|title }}</a>
+                </a>
+            {% else %}
+            <div class="flex items-center">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center mr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+            <a href = "/login" class="hidden md:block bg-accent hover:bg-opacity-90 text-dark font-medium px-4 py-2 rounded-md smooth-transition">
+                Sign In
+            </a>
+            {% endif %}
+                <button class="md:hidden text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
         </div>
     </nav>
 
-    {% block body %}
-        
+    <!-- ------------------------------------------For Mobile version-------------------------------------------------------------- -->
 
+    <div id="mobile-menu" class="hidden bg-dark text-white py-4 px-6 md:hidden">
+        <div class="flex flex-col space-y-4">
+            <a href="#home" class="py-2 border-b border-gray-700">Home</a>
+            <a href="#post-jobs" class="py-2 border-b border-gray-700">Post Jobs</a>
+            <a href="#features" class="py-2 border-b border-gray-700">AI Features</a>
+            <a href="#wallet" class="py-2 border-b border-gray-700">Smart Wallet</a>
+            <div class="py-2 border-b border-gray-700">
+                <div class="font-medium mb-2">Support</div>
+                <div class="flex flex-col space-y-2 ml-4">
+                    <a href="#faq" class="py-1">FAQ</a>
+                    <a href="#privacy" class="py-1">Privacy Policy</a>
+                    <a href="#guidelines" class="py-1">Community Guidelines</a>
+                </div>
+            </div>
+            {% if session['user_id'] %}
+                <a href="/profile"
+                class="hidden md:block bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium px-4 py-2 rounded-full smooth-transition flex items-center space-x-2">
+                <i class="fas fa-user-circle text-lg"></i>
+                <span>{{ session['username'] }}</span>
+                </a>
+            {% else %}
+                <a href="/login"
+                class="hidden md:block bg-accent hover:bg-opacity-90 text-dark font-medium px-4 py-2 rounded-md smooth-transition">
+                Sign In
+                </a>
+            {% endif %}
+
+        </div>
+    </div>
+
+    {% block body %}
 
     {% endblock body %}
+
+
+
+    <footer class="bg-dark text-white py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-tasks text-accent text-2xl"></i>
+                        <span class="font-poppins font-bold text-xl">Task<span class="text-accent">Ease</span></span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Connecting teens and young adults with safe, rewarding part-time opportunities.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white smooth-transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white smooth-transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white smooth-transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white smooth-transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-poppins font-semibold text-lg mb-4">For Teens</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">Find Jobs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">Smart Wallet</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">Safety Tips</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">Success Stories</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-poppins font-semibold text-lg mb-4">For Parents</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">Post Jobs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">Parental Controls</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">Safety Features</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">Pricing Guide</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-poppins font-semibold text-lg mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">Press</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white smooth-transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-400 text-sm mb-4 md:mb-0">
+                    &copy; 2023 TaskEase. All rights reserved.
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#privacy" class="text-gray-400 hover:text-white text-sm smooth-transition">Privacy
+                        Policy</a>
+                    <a href="#guidelines" class="text-gray-400 hover:text-white text-sm smooth-transition">Community
+                        Guidelines</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm smooth-transition">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 
 </body>

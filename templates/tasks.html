@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %} Tasks {% endblock title %}
+{% block body %}
+
+
+
+<div class="container my-5 ">
+    <h2>All Jobs</h2>
+    {% if alljobs|length == 0 %}
+    <div class="alert alert-dark my-3" role="alert">
+        No Jobs Available !!!
+    </div>
+
+    {% else %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">S.No</th>
+                <th scope="col">Job Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Payment</th>
+                <th scope="col">Date Uploaded</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jobs in alljobs %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{jobs.job}}</td>
+                <td>{{jobs.desc}}</td>
+                <td>{{jobs.pay}}</td>
+                <td>{{jobs.date_created}}</td>
+                <td>
+                    <form action = '/acceptJob/{{jobs.sno}}' method = 'POST'  >
+                        <button type="submit" class="btn btn-outline-success btn-sm mx-1">Accept</button>
+                    </form> 
+                </td>
+                       
+            </tr>
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+
+    {% endif %}
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+
+
+
+    
+{% endblock body %}

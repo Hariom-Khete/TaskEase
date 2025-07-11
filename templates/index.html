@@ -1,71 +1,727 @@
 {% extends 'base.html' %}
 
-{% block title %} Home {% endblock title %}
+{% block title %} Home  {% endblock title %}
 
 {% block body%}
+<!-- -------------------------------------------------------------Nav Bar-------------------------------------------------------- -->
 
-
-
-<div class="container">
-    <h2>Your Listings</h2>
-    <form action='/' method='POST'>
-        <div class="mb-3">
-            <label for="title" class="form-label">Job Title</label>
-            <input type="text" class="form-control" name='title' id="title" >
+    <section id="home" class="gradient-bg text-white py-16 md:py-24 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="font-poppins font-bold text-4xl md:text-5xl leading-tight mb-6">
+                    Find or Post <span class="text-accent">Part-Time Gigs</span> Made Easy
+                </h1>
+                <p class="text-lg mb-8 opacity-90">
+                    TaskEase connects teenagers and young adults with local opportunities. 
+                    Our AI-powered platform ensures safe, fair, and rewarding experiences.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href = "/login" class="bg-accent hover:bg-opacity-90 text-dark font-medium px-6 py-3 rounded-md smooth-transition">
+                        Find Jobs <i class="fas fa-search ml-2"></i>
+                    </a>
+                    <a href = "/login" class="bg-white hover:bg-opacity-90 text-primary font-medium px-6 py-3 rounded-md smooth-transition">
+                        Post Jobs <i class="fas fa-plus ml-2"></i>
+                    </a>
+                </div>
+                <div class="mt-8 flex items-center space-x-4">
+                    <div class="flex -space-x-2">
+                        <img src="https://randomuser.me/api/portraits/women/12.jpg" class="w-10 h-10 rounded-full border-2 border-white">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-10 h-10 rounded-full border-2 border-white">
+                        <img src="https://randomuser.me/api/portraits/women/45.jpg" class="w-10 h-10 rounded-full border-2 border-white">
+                    </div>
+                    <div>
+                        <div class="font-medium">Build by our Team</div>
+                        <div class="flex items-center text-sm opacity-80">
+                            <i class="fas fa-star text-yellow-400 mr-1"></i>
+                            <span>4.9 (XAnanta)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="md:w-1/2 flex justify-center relative">
+                <img src="https://illustrations.popsy.co/amber/digital-nomad.svg" alt="Teen working" class="w-full max-w-md floating">
+                <div class="absolute -bottom-6 left-0 right-0 flex justify-center">
+                    <div class="bg-white text-dark rounded-lg shadow-xl p-4 max-w-sm mx-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-full">
+                                <i class="fas fa-bolt text-accent text-xl"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium">AI-Powered Matching</div>
+                                <div class="text-sm opacity-70">Get personalized job recommendations</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="desc" class="form-label">Description</label>
-            <input type="text" class="form-control" name='desc' id="desc">
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-16 px-6 bg-white ">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="font-poppins font-bold text-3xl text-dark text-center mb-4">How TaskEase Works</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+                Simple steps to start earning or getting help with your tasks
+            </p>
+
+<!-- ------------------------------------------------------------------Options--------------------------------------------------------------------------------------------------------------- -->
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 rounded-xl p-6 text-center smooth-transition hover:shadow-md">
+                    <div class="bg-primary bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-plus text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="font-poppins font-semibold text-dark text-xl mb-2">1. Create Profile</h3>
+                    <p class="text-gray-600">
+                        Set up your profile in minutes. Tell us your skills, availability, and preferences.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 text-center smooth-transition hover:shadow-md">
+                    <div class="bg-secondary bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-search-dollar text-secondary text-2xl"></i>
+                    </div>
+                    <h3 class="font-poppins font-semibold text-dark text-xl mb-2">2. Browse or Post</h3>
+                    <p class="text-gray-600">
+                        Find perfect gigs or post your tasks. Our AI suggests fair pricing and matches.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 text-center smooth-transition hover:shadow-md">
+                    <div class="bg-accent bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-wallet text-accent text-2xl"></i>
+                    </div>
+                    <h3 class="font-poppins font-semibold text-dark text-xl mb-2">3. Earn Securely</h3>
+                    <p class="text-gray-600">
+                        Get paid through our Smart Wallet. Track earnings and withdraw anytime.
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="pay" class="form-label">Payment</label>
-            <input type="number" class="form-control" name='pay' id="pay">
+    </section>
+
+<!--------------------------------------------------Search for job section------------------------------------------------------------------------------------------------------------------------------------------------ -->
+
+    <section id="find-jobs" class="py-16 px-6 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center mb-12">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h2 class="font-poppins font-bold text-dark text-3xl mb-4">Find <span class="text-primary">Perfect Gigs</span> Near You</h2>
+                    <p class="text-gray-600 mb-6">
+                        Our AI matches you with jobs based on your skills, location, and schedule. 
+                        Browse hundreds of verified opportunities.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                        <div class="relative flex-grow">
+                            <input type="text" placeholder="Search jobs..." class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <i class="fas fa-search absolute left-3 top-3.5 text-gray-400"></i>
+                        </div>
+                        <button class="bg-primary hover:bg-opacity-90 text-white font-medium px-6 py-3 rounded-lg smooth-transition">
+                            Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Job Card 1 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden job-card smooth-transition">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-poppins font-semibold text-dark text-xl mb-1">Notes Writing</h3>
+                                <div class="flex items-center text-gray-500 text-sm">
+                                    <i class="fas fa-map-marker-alt mr-1"></i>
+                                    <span>0.5 kilometers away</span>
+                                </div>
+                            </div>
+                            <div class="bg-primary bg-opacity-10 px-3 py-1 rounded-full text-primary text-sm font-medium">
+                                150rs/hr
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Need someone to write my class notes 3x/week after school. Must have neat handwriting and be reliable!"
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">After School</span>
+                            <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">Flexible</span>
+                            <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">Outdoors</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/women/33.jpg" class="w-8 h-8 rounded-full mr-2">
+                                <span class="font-medium text-dark text-sm">Sarah J.</span>
+                            </div>
+                            <button class="bg-primary bg-opacity-10 hover:bg-opacity-20 text-primary font-medium px-4 py-2 rounded-lg text-sm smooth-transition">
+                                Apply Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Job Card 2 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden job-card smooth-transition">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-poppins text-dark font-semibold text-xl mb-1">Math Tutoring</h3>
+                                <div class="flex items-center text-gray-500 text-sm">
+                                    <i class="fas fa-map-marker-alt mr-1"></i>
+                                    <span>Online</span>
+                                </div>
+                            </div>
+                            <div class="bg-primary bg-opacity-10 px-3 py-1 rounded-full text-primary text-sm font-medium">
+                                500rs/hr
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Seeking algebra tutor for 9th grader. 2 sessions per week via Zoom. Must have experience.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">Online</span>
+                            <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">Weekdays</span>
+                            <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">Education</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-8 h-8 rounded-full mr-2">
+                                <span class="font-medium text-dark text-sm">Michael T.</span>
+                            </div>
+                            <button class="bg-primary bg-opacity-10 hover:bg-opacity-20 text-primary font-medium px-4 py-2 rounded-lg text-sm smooth-transition">
+                                Apply Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Job Card 3 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden job-card smooth-transition">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-poppins font-semibold text-dark text-xl mb-1">Create Presentation</h3>
+                                <div class="flex items-center text-gray-500 text-sm">
+                                    <i class="fas fa-map-marker-alt mr-1"></i>
+                                    <span>Online</span>
+                                </div>
+                            </div>
+                            <div class="bg-primary bg-opacity-10 px-3 py-1 rounded-full text-primary text-sm font-medium">
+                                18rs/hr
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">
+                            Need someone to make my class presentations three times a week.
+                            Must be good with slides and have a sense of design!
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">Weekend</span>
+                            <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">One-time</span>
+                            <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">Physical</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/women/68.jpg" class="w-8 h-8 rounded-full mr-2">
+                                <span class="font-medium text-dark text-sm">Lisa P.</span>
+                            </div>
+                            <button class="bg-primary bg-opacity-10 hover:bg-opacity-20 text-primary font-medium px-4 py-2 rounded-lg text-sm smooth-transition">
+                                Apply Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <button class="border border-primary text-primary hover:bg-primary hover:text-white font-medium px-6 py-3 rounded-lg smooth-transition">
+                    View All Jobs <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
         </div>
-        <button type="submit" class="btn btn-dark btn-outline-light btn-primary">Submit</button>
-    </form>
-</div>
-<div class="container my-3">
-    <h3>Your Jobs</h3>
-    {% if alljobs|length == 0 %}
-    <div class="alert alert-dark" role="alert">
-        Add Your Errands now !!!
-    </div>
+    </section>
 
-    {% else %}
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">S.No</th>
-                <th scope="col">Job Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Payment</th>
-                <th scope="col">Date Uploaded</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for jobs in alljobs %}
-            <tr>
-                <th scope="row">{{loop.index}}</th>
-                <td>{{jobs.job}}</td>
-                <td>{{jobs.desc}}</td>
-                <td>{{jobs.pay}}</td>
-                <td>{{jobs.date_created}}</td>
-                <td><a href='/remove/{{jobs.sno}}' type="button"
-                        class="btn btn-outline-dark  btn-sm mx-1">Remove</button>
-                        <a href='/edit/{{jobs.sno}}' type="button"
-                            class="btn btn-outline-dark  btn-sm mx-1">Edit</button></td>
-            </tr>
-            {% endfor %}
+    <!-- Post Jobs Section -->
+    <section id="post-jobs" class="py-16 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center mb-12">
+                <div class="md:w-1/2 order-1 md:order-2">
+                    <h2 class="font-poppins font-bold text-dark text-3xl mb-4">Need Help? <span class="text-secondary">Post a Job</span></h2>
+                    <p class="text-gray-600 mb-6">
+                        Get your tasks done quickly by our community of reliable teens. 
+                        Our AI suggests fair pricing and helps you find the perfect match.
+                    </p>
+                    
+                    <div class="bg-gray-50 rounded-xl p-6 mb-6">
+                        <h3 class="font-poppins font-semibold text-dark text-xl mb-4">What kind of help do you need?</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button class="bg-white hover:bg-gray-100 text-dark border border-gray-200 rounded-lg px-4 py-3 text-left smooth-transition">
+                                <i class="fas fa-camera  text-secondary mr-2"></i> Media Editor
+                            </button>
+                            <button class="bg-white hover:bg-gray-100 text-dark border border-gray-200 rounded-lg px-4 py-3 text-left smooth-transition">
+                                <i class="fas fa-book text-secondary mr-2"></i> Tutoring
+                            </button>
+                            <button class="bg-white hover:bg-gray-100 text-dark border border-gray-200 rounded-lg px-4 py-3 text-left smooth-transition">
+                                <i class="fas fa-book-open text-secondary mr-2"></i> Notes Writing
+                            </button>
+                            <button class="bg-white hover:bg-gray-100 border text-dark border-gray-200 rounded-lg px-4 py-3 text-left smooth-transition">
+                                <i class="fas fa-guitar text-secondary mr-2"></i> Teach Music
+                            </button>
+                            <button class="bg-white hover:bg-gray-100 border text-dark border-gray-200 rounded-lg px-4 py-3 text-left smooth-transition">
+                                <i class="fas fa-laptop-code text-secondary mr-2"></i> Tech Help
+                            </button>
+                            <button class="bg-white hover:bg-gray-100 border text-dark  border-gray-200 rounded-lg px-4 py-3 text-left smooth-transition">
+                                <i class="fas fa-person-biking text-secondary mr-2"></i> Drop Off
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button class="bg-secondary hover:bg-opacity-90 text-white font-medium px-6 py-3 rounded-lg smooth-transition w-full md:w-auto">
+                        Post Your Job <i class="fas fa-plus ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <!-- AI Features Section -->
+    <section id="features" class="py-16 px-6 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="font-poppins font-bold text-3xl text-dark text-center mb-4">Our <span class="text-primary">AI-Powered</span> Features</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+                TaskEase uses advanced artificial intelligence to create a safe, efficient, and rewarding experience
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white rounded-xl p-6 ai-feature-card smooth-transition">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-lg mr-4">
+                            <i class="fas fa-shield-alt text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="font-poppins text-dark font-semibold text-xl">Fraud Detection</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Our AI analyzes patterns to detect and prevent fraudulent job postings and applications, keeping you safe.
+                    </p>
+                    <div class="flex items-center text-sm text-primary font-medium">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-white rounded-xl p-6 ai-feature-card smooth-transition">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-secondary bg-opacity-10 p-3 rounded-lg mr-4">
+                            <i class="fas fa-robot text-secondary text-2xl"></i>
+                        </div>
+                        <h3 class="font-poppins text-dark font-semibold text-xl">Smart Matching</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Get personalized job recommendations based on your skills, location, schedule, and past experiences.
+                    </p>
+                    <div class="flex items-center text-sm text-secondary font-medium">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-white rounded-xl p-6 ai-feature-card smooth-transition">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-accent bg-opacity-10 p-3 rounded-lg mr-4">
+                            <i class="fas fa-comment-dots text-accent text-2xl"></i>
+                        </div>
+                        <h3 class="font-poppins text-dark   font-semibold text-xl">AI Assistant</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Our chatbot helps you create better job posts, suggests fair pricing, and answers your questions 24/7.
+                    </p>
+                    <div class="flex items-center text-sm text-accent font-medium">
+                        <span>Learn more</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-white rounded-2xl overflow-hidden shadow-xl">
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/2 p-8 md:p-12">
+                        <h3 class="font-poppins font-bold text-dark text-2xl mb-4">Try Our <span class="text-primary">AI Pricing</span> Assistant</h3>
+                        <p class="text-gray-600 mb-6">
+                            Not sure what's a fair price for your job? Our AI analyzes thousands of similar jobs to suggest competitive rates.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-gray-700 mb-1">Job Type</label>
+                                <select class="w-full px-4 py-3 rounded-lg border text-dark border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option>Select job type</option>
+                                    <option>Media Editor</option>
+                                    <option>Tutoring</option>
+                                    <option>Teach Music</option>
+                                    <option>Tech Help</option>
+                                    <option>Drop Off</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-1">Duration</label>
+                                <select class="w-full px-4 py-3 text-dark rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                    <option>Select duration</option>
+                                    <option>One-time</option>
+                                    <option>1-3 hours</option>
+                                    <option>4-8 hours</option>
+                                    <option>Multiple days</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 mb-1">Complexity</label>
+                                <div class="flex space-x-2">
+                                    <button class="flex-1 bg-gray-100 text-dark hover:bg-gray-200 px-4 py-2 rounded-lg smooth-transition">Simple</button>
+                                    <button class="flex-1 bg-gray-100 text-dark hover:bg-gray-200 px-4 py-2 rounded-lg smooth-transition">Moderate</button>
+                                    <button class="flex-1 bg-gray-100 text-dark hover:bg-gray-200 px-4 py-2 rounded-lg smooth-transition">Complex</button>
+                                </div>
+                            </div>
+                            
+                            <button class="w-full bg-primary hover:bg-opacity-90 text-white font-medium px-6 py-3 rounded-lg smooth-transition mt-4">
+                                Get Price Suggestion
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2 bg-primary bg-opacity-5 p-8 md:p-12 flex flex-col justify-center">
+                        <div class="bg-white rounded-xl p-6 shadow-md">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded-full mr-4">
+                                    <i class="fas fa-lightbulb text-primary text-xl"></i>
+                                </div>
+                                <h4 class="font-poppins text-dark font-semibold">Suggested Pricing</h4>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                                    <span class="text-gray-600 ">Hourly Rate</span>
+                                    <span class="font-medium text-dark">150rs - 200rs</span>
+                                </div>
+                                <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Average in Your Area</span>
+                                    <span class="font-medium text-dark">100rs</span>
+                                </div>
+                                <div class="flex justify-between items-center pb-2 border-b border-gray-100">
+                                    <span class="text-gray-600">Popular Times</span>
+                                    <span class="font-medium text-dark">Weekends</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Demand Level</span>
+                                    <span class="font-medium text-green-500">High</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 bg-primary bg-opacity-5 p-4 rounded-lg">
+                                <div class="flex items-start">
+                                    <i class="fas fa-info-circle text-primary mt-1 mr-3"></i>
+                                    <p class="text-sm text-gray-600">
+                                        Based on 127 similar jobs in your area, we recommend $15-20/hour to attract quality applicants quickly.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        </tbody>
-    </table>
+    <!-- Smart Wallet Section -->
+    <section id="wallet" class="py-16 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center mb-12">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h2 class="font-poppins font-bold text-dark text-3xl mb-4">Smart <span class="text-accent">Wallet</span> for Secure Payments</h2>
+                    <p class="text-gray-600 mb-6">
+                        Track your earnings, get paid securely, and withdraw funds anytime. 
+                        Parents can monitor transactions for added safety.
+                    </p>
+                    
+                    <div class="space-y-4 text-dark mb-8">
+                        <div class="flex items-center">
+                            <div class="bg-accent  bg-opacity-10 p-2 rounded-full mr-4">
+                                <i class="fas fa-lock text-accent"></i>
+                            </div>
+                            <span>Bank-level security with encryption</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-accent bg-opacity-10 p-2 rounded-full mr-4">
+                                <i class="fas fa-bolt text-accent"></i>
+                            </div>
+                            <span>Instant transfers to your bank account</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-accent bg-opacity-10 p-2 rounded-full mr-4">
+                                <i class="fas fa-chart-line text-accent"></i>
+                            </div>
+                            <span>Earnings analytics and tax reports</span>
+                        </div>
+                    </div>
+                    
+                    <button class="bg-accent hover:bg-opacity-90 text-dark font-medium px-6 py-3 rounded-lg smooth-transition">
+                        Explore Wallet Features
+                    </button>
+                </div>
+                
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="bg-gradient-to-br from-primary to-secondary rounded-3xl p-8 text-white w-80 h-48 shadow-xl">
+                            <div class="flex justify-between items-start mb-8">
+                                <div>
+                                    <div class="text-sm opacity-80">Current Balance</div>
+                                    <div class="font-poppins font-bold text-3xl">$247.50</div>
+                                </div>
+                                <div class="bg-white bg-opacity-20 p-2 rounded-lg">
+                                    <i class="fas fa-wallet text-xl"></i>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <div class="text-xs opacity-80">Last Payment</div>
+                                    <div class="font-medium">$45.00</div>
+                                </div>
+                                <div>
+                                    <div class="text-xs opacity-80">Available</div>
+                                    <div class="font-medium">$247.50</div>
+                                </div>
+                                <button class="bg-white text-primary text-sm font-medium px-4 py-2 rounded-lg">
+                                    Withdraw
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg p-6 absolute -bottom-16 -right-10 w-64">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 class="font-medium">Recent Transactions</h4>
+                                <i class="fas fa-ellipsis-h text-gray-400"></i>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="bg-green-100 p-2 rounded-full mr-3">
+                                            <i class="fas fa-arrow-down text-green-500 text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-sm">Dog Walking</div>
+                                            <div class="text-xs text-gray-400">Today, 4:30 PM</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-green-500 font-medium">+$45.00</div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="bg-blue-100 p-2 rounded-full mr-3">
+                                            <i class="fas fa-arrow-up text-blue-500 text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-medium text-sm">Withdrawal</div>
+                                            <div class="text-xs text-gray-400">Jun 12, 2:15 PM</div>
+                                        </div>
+                                    </div>
+                                    <div class="text-blue-500 font-medium">-$100.00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    {% endif %}
+    <!-- Testimonials -->
+    <section class="py-16 px-6 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="font-poppins font-bold text-3xl text-dark text-center mb-4">What Our <span class="text-primary">Users Say</span></h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">
+                Hear from teens and parents who've found success with TaskEase
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white rounded-xl p-8 shadow-md">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/28.jpg" class="w-14 h-14 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-poppins text-dark font-semibold">Jessica R.</h4>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>5.0</span>
+                                <span class="mx-2">•</span>
+                                <span>Babysitter</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        "I've earned over $1,200 in three months babysitting through TaskEase. The AI matching is amazing - it connects me with families who need my exact schedule and skills."
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">Verified User</span>
+                        <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">50+ Jobs</span>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white rounded-xl p-8 shadow-md">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/42.jpg" class="w-14 h-14 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-poppins text-dark font-semibold">Michael T.</h4>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <span>4.9</span>
+                                <span class="mx-2">•</span>
+                                <span>Parent</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        "As a parent, I love the safety features. The background checks and AI fraud detection give me peace of mind when hiring teens to help with yard work and tutoring."
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">Verified Parent</span>
+                        <span class="bg-gray-100 px-3 py-1 text-dark rounded-full text-sm">20+ Hires</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+    <!-- CTA Section -->
+    <section class="gradient-bg text-white py-16 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="font-poppins font-bold text-3xl md:text-4xl mb-6">Ready to <span class="text-accent">Start Earning</span> or <span class="text-accent">Get Help</span>?</h2>
+            <p class="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
+                Join thousands of teens and parents using TaskEase to connect for part-time gigs and tasks.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button class="bg-white hover:bg-opacity-90 text-primary font-medium px-8 py-4 rounded-lg smooth-transition">
+                    Sign Up as Job Seeker
+                </button>
+                <button class="bg-accent hover:bg-opacity-90 text-dark font-medium px-8 py-4 rounded-lg smooth-transition">
+                    Post a Job
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 px-6 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="font-poppins font-bold text-3xl text-dark text-center mb-4">Frequently <span class="text-primary">Asked Questions</span></h2>
+            <p class="text-center text-gray-600 mb-12">
+                Get answers to common questions about TaskEase
+            </p>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-toggle w-full text-left p-6 hover:bg-gray-50 focus:outline-none flex justify-between items-center">
+                        <span class="font-medium text-dark">How does TaskEase ensure safety for teenagers?</span>
+                        <i class="fas fa-chevron-down text-gray-400 smooth-transition"></i>
+                    </button>
+                    <div class="faq-content text-dark hidden px-6 pb-6">
+                        <p class="text-gray-600">
+                            We employ multiple safety measures including AI-powered fraud detection, verified profiles, secure messaging within the platform, and optional parental monitoring features. All financial transactions are processed securely through our Smart Wallet system.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-toggle w-full text-left p-6 hover:bg-gray-50 focus:outline-none flex justify-between items-center">
+                        <span class="font-medium text-dark">What percentage does TaskEase take from earnings?</span>
+                        <i class="fas fa-chevron-down text-gray-400 smooth-transition"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600">
+                            TaskEase charges a 10% service fee on completed jobs. This covers platform maintenance, safety features, payment processing, and customer support. There are no hidden fees or subscription costs.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-toggle w-full text-left p-6 hover:bg-gray-50 focus:outline-none flex justify-between items-center">
+                        <span class="font-medium text-dark">How does the AI matching system work?</span>
+                        <i class="fas fa-chevron-down text-gray-400 smooth-transition"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600">
+                            Our AI analyzes multiple factors including your skills, past job performance, location, schedule availability, and preferences to match you with the most suitable jobs or candidates. The more you use TaskEase, the better our recommendations become.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="border border-gray-200 rounded-xl overflow-hidden">
+                    <button class="faq-toggle w-full text-left p-6 hover:bg-gray-50 focus:outline-none flex justify-between items-center">
+                        <span class="font-medium text-dark">Can parents monitor their teen's account?</span>
+                        <i class="fas fa-chevron-down text-gray-400 smooth-transition"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-6">
+                        <p class="text-gray-600">
+                            Yes! Parents can request to link their account to their teen's profile. This allows them to view job applications, earnings, and messages while still giving the teen independence to manage their work.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.md\\:hidden button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                
+                // Toggle content
+                content.classList.toggle('hidden');
+                
+                // Rotate icon
+                if (content.classList.contains('hidden')) {
+                    icon.classList.remove('transform', 'rotate-180');
+                } else {
+                    icon.classList.add('transform', 'rotate-180');
+                }
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
 {% endblock body %}

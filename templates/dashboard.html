@@ -1,0 +1,363 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DashBoard{% endblock title %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/lucide-icons@0.1.4/dist/lucide.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.1.4/dist/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #181818;
+            color: #f5f5f5;
+        }
+
+        .search-glow:focus {
+            box-shadow: 0 0 0 2px rgba(142, 68, 173, 0.5);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .category-btn.active {
+            background-color: #8E44AD;
+            color: white;
+        }
+
+        .location-glow:hover {
+            filter: drop-shadow(0 0 6px rgba(52, 152, 219, 0.7));
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse-hover:hover {
+            animation: pulse 1.5s infinite;
+        }
+
+        .job-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .job-details.expanded {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .container {
+            max-width: 1400px;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding-left: 4rem;
+                padding-right: 4rem;
+            }
+        }
+
+        .job-card {
+            display: none;
+        }
+
+        .job-card.visible {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    
+    
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-10">
+
+
+            <!-- "hi" text just below the logo -->
+
+    </div>
+    <button class="md:hidden">
+        <i data-lucide="menu" class="text-white"></i>
+    </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="mb-12 text-center">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Uncover the <span
+                class="bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">Perfect
+                Gig</span></h2>
+        <p class="text-gray-400 max-w-2xl mx-auto text-lg">To Crafted to Match Your Unique Style.</p>
+    </section>
+
+    <!-- Search Section -->
+    <section class="mb-16">
+        <div class="max-w-5xl mx-auto">
+            <!-- Category Filters -->
+            <div class="mb-8">
+                <h3 class="text-lg font-medium mb-4 text-gray-300">Filter by Category</h3>
+                <div class="flex flex-wrap gap-3">
+                    <form method="GET" action="{{ url_for('dashboard') }}">
+                        <input type="hidden" name="category" value="All">
+                        <button type="submit"
+                            class="category-btn px-4 py-2 rounded-full bg-gray-800 text-gray-300 hover:bg-purple-700 hover:text-white transition {% if request.args.get('category') == 'All' %}bg-purple-700 text-white{% endif %}">
+                            All Categories
+                        </button>
+                    </form>
+
+                    <form method="GET" action="{{ url_for('dashboard') }}">
+                        <input type="hidden" name="category" value="Media Editor">
+                        <button type="submit"
+                            class="category-btn px-4 py-2 rounded-full bg-gray-800 text-gray-300 hover:bg-purple-700 hover:text-white transition {% if request.args.get('category') == 'Media Editor' %}bg-purple-700 text-white{% endif %}">
+                            Media Editor
+                        </button>
+                    </form>
+                    <form method="GET" action="{{ url_for('dashboard') }}">
+                        <input type="hidden" name="category" value="Tutoring">
+                        <button type="submit"
+                            class="category-btn px-4 py-2 rounded-full bg-gray-800 text-gray-300 hover:bg-purple-700 hover:text-white transition {% if request.args.get('category') == 'Tutoring' %}bg-purple-700 text-white{% endif %}">
+                            Tutoring
+                        </button>
+                    </form>
+
+                    <form method="GET" action="{{ url_for('dashboard') }}">
+                        <input type="hidden" name="category" value="Tech Music">
+                        <button type="submit"
+                            class="category-btn px-4 py-2 rounded-full bg-gray-800 text-gray-300 hover:bg-purple-700 hover:text-white transition {% if request.args.get('category') == 'Teach Music' %}bg-purple-700 text-white{% endif %}">
+                            Teach Music
+                        </button>
+                    </form>
+                    <form method="GET" action="{{ url_for('dashboard') }}">
+                        <input type="hidden" name="category" value="Tech Help">
+                        <button type="submit"
+                            class="category-btn px-4 py-2 rounded-full bg-gray-800 text-gray-300 hover:bg-purple-700 hover:text-white transition {% if request.args.get('category') == 'Tech Help' %}bg-purple-700 text-white{% endif %}">
+                            Tech Help
+                        </button>
+                    </form>
+
+                    <form method="GET" action="{{ url_for('dashboard') }}">
+                        <input type="hidden" name="category" value="Drop Off">
+                        <button type="submit"
+                            class="category-btn px-4 py-2 rounded-full bg-gray-800 text-gray-300 hover:bg-purple-700 hover:text-white transition {% if request.args.get('category') == 'Drop Off' %}bg-purple-700 text-white{% endif %}">
+                            Drop Off
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Talent Search -->
+            <div>
+                <h3 class="text-lg font-medium mb-4 text-gray-300">Search by Your Talents</h3>
+                <form method="GET" action="{{ url_for('dashboard') }}">
+                    <div class="relative">
+                        <input type="text" name="search" value="{{ request.args.get('search', '') }}"
+                            placeholder="Enter your skills (e.g. graphic design, piano, coding)"
+                            class="w-full py-4 px-6 rounded-xl bg-gray-800 text-white placeholder-gray-500 border border-gray-700 focus:outline-none search-glow transition">
+                        <button
+                            class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
+                            Match Jobs
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Listings -->
+    <section class="mb-16">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold">Recommended For You</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="job-container">
+                <!-- Job Card 1 -->
+                {% for job in alljobs %}
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 transition duration-300 card-hover">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="flex items-center space-x-2 mb-1">
+                                <i data-lucide="file-text" class="w-5 h-5 text-blue-400"></i>
+                                <h3 class="text-xl font-semibold text-white">{{ job.job |title }}</h3>
+                            </div>
+                            <p class="text-gray-400 text-sm">{{ job.category }}</p>
+                        </div>
+                        <div>
+                            {% if job.user_id == user.id %}
+                                <!-- Show delete button if the job is posted by the current user -->
+                                <a href="{{ url_for('remove', sno=job.sno) }}" class="text-red-500 hover:underline text-sm">Delete</a>
+                            {% else %}
+                                <!-- Show chat link otherwise -->
+                                <a href="{{ url_for('chat', receiver_id=job.user_id) }}?job_id={{ job.sno }}" class="text-blue-500 hover:underline text-sm">Accept</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-2 mb-6">
+                        <i data-lucide="text" class="w-5 h-5 text-gray-400 mt-1"></i>
+                        <p class="text-gray-300">{{ job.desc|capitalize }}</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-2">
+                            <div class="location-glow pulse-hover cursor-pointer">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-blue-400"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm">{{ job.location }}</span>
+                        </div>
+                        <button
+                            class="bg-gradient-to-r from-purple-600 to-blue-500 text-white px-4 py-2 rounded-lg hover:opacity-90 transition">
+                            Details
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="w-full flex justify-center mt-10">
+                <button id="load-more-btn"
+                    class="bg-gray-800 text-white px-6 py-3 rounded-lg border border-gray-700 hover:bg-gray-700 transition">
+                    No More Jobs
+                </button>
+            </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 pt-8 pb-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center">
+                        <div
+                            class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center mr-2">
+                            <i data-lucide="briefcase" class="text-white w-4 h-4"></i>
+                        </div>
+                        <span class="font-bold">SkillMatch</span>
+                    </div>
+                </div>
+                <div class="flex space-x-6 mb=4 md:mb-0">
+                    <a href="#" class="text-gray-400 hover:text-white transition">About</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Jobs</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Privacy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Terms</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Contact</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-6 text-center text-gray-500 text-sm">
+                © 2023 SkillMatch. All rights reserved.
+            </div>
+        </div>
+    </footer>
+    </div>
+    
+
+    <script >
+        lucide.createIcons();
+
+        // Category filter functionality
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Toggle job details
+        const detailButtons = document.querySelectorAll('.toggle-details');
+        detailButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const card = e.target.closest('.bg-gray-800');
+                const details = card.querySelector('.job-details');
+                details.classList.toggle('expanded');
+
+                if (details.classList.contains('expanded')) {
+                    e.target.textContent = 'Hide Details';
+                } else {
+                    e.target.textContent = 'Details';
+                }
+            });
+        });
+
+        // Job loading functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const jobCards = document.querySelectorAll('.job-card');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            let visibleCount = 6;
+            const jobsPerLoad = 6;
+
+            // Initially show first 6 jobs
+            jobCards.forEach((card, index) => {
+                if (index < visibleCount) {
+                    card.classList.add('visible');
+                }
+            });
+
+            // Update button text if all jobs are visible
+            if (visibleCount >= jobCards.length) {
+                loadMoreBtn.textContent = 'No More Jobs';
+                loadMoreBtn.disabled = true;
+            }
+
+            // Load more jobs when button is clicked
+            loadMoreBtn.addEventListener('click', function () {
+                const nextCount = visibleCount + jobsPerLoad;
+
+                // Show next batch of jobs
+                for (let i = visibleCount; i < nextCount && i < jobCards.length; i++) {
+                    jobCards[i].classList.add('visible');
+                }
+
+                visibleCount = Math.min(nextCount, jobCards.length);
+
+                // Update button text if all jobs are visible
+                if (visibleCount >= jobCards.length) {
+                    loadMoreBtn.textContent = 'No More Jobs';
+                    loadMoreBtn.disabled = true;
+                }
+            });
+        });
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            const pass = document.getElementById('password').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            if (pass !== confirm) {
+                e.preventDefault();
+                alert("Passwords do not match!");
+            }
+        });
+    </script>
+</body>
+
+
+{% endblock body %}
